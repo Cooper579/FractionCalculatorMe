@@ -7,14 +7,13 @@ public class FracCalc {
         Scanner input = new Scanner(System.in);
         String equation = "something";
 
-        //while (!(equation.equals=="quit")){
-        //
-        //}
-        System.out.println("Write your fraction Equation");
-        equation = input.nextLine();
+        while (!(equation.equals("quit"))) {
+            System.out.println("Write your fraction Equation (type \"quite\" to exit)");
+            equation = input.nextLine();
 
-        String answer = produceAnswer(equation);
-        System.out.println(answer);
+            String answer = produceAnswer(equation);
+            System.out.println(answer);
+        }
     }
 
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
@@ -33,25 +32,38 @@ public class FracCalc {
         String operation = inputs.next();
         String lTerm = inputs.next();
 
+        int fNum;
+        int fDen;
+        int fWhole;
+
+        Scanner deliminate = new Scanner(fTerm);
         //If the term has a fractional part
         if (fTerm.indexOf("/") >= 0){
             //if the term has a whole number part
             if (fTerm.indexOf("_") >= 0){
 
-            } else{
+                deliminate.useDelimiter("_");
 
+                fWhole = deliminate.nextInt();
+
+                deliminate.useDelimiter("/");
+                fNum = deliminate.nextInt();
+                fDen = deliminate.nextInt();
+
+            } else{
+                deliminate.useDelimiter("/");
+                fWhole = 0;
+                fNum = deliminate.nextInt();
+                fDen = deliminate.nextInt();
             }
 
         } else{
-            String fWhole = fTerm;
-            String fNum = 0;
-            Strnig fDen = 1;
+            //fWhole = (int) fTerm;
+            fNum = 0;
+            fDen = 1;
         }
 
-
-
-
-        return lTerm;
+        return fNum + " " + fDen;
     }
 }
 // TODO: Fill in the space below with any helper methods that you think you will need
