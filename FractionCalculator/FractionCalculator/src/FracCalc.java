@@ -8,11 +8,13 @@ public class FracCalc {
         String equation = "something";
 
         while (!(equation.equals("quit"))) {
-            System.out.println("Write your fraction Equation (type \"quite\" to exit)");
+            System.out.println("Write your fraction Equation (type \"quit\" to exit)");
             equation = input.nextLine();
 
-            String answer = produceAnswer(equation);
-            System.out.println(answer);
+            if (!(equation.equals("quit"))) {
+                String answer = produceAnswer(equation);
+                System.out.println(answer);
+            }
         }
     }
 
@@ -36,6 +38,11 @@ public class FracCalc {
         int fDen;
         int fWhole;
 
+        int lNum;
+        int lDen;
+        int lWhole;
+
+        //Numerator
         Scanner deliminate = new Scanner(fTerm);
         //If the term has a fractional part
         if (fTerm.indexOf("/") >= 0){
@@ -46,9 +53,13 @@ public class FracCalc {
 
                 fWhole = deliminate.nextInt();
 
-                deliminate.useDelimiter("/");
-                fNum = deliminate.nextInt();
-                fDen = deliminate.nextInt();
+                String tempString = deliminate.next();
+
+                Scanner fracPart = new Scanner(tempString);
+
+                fracPart.useDelimiter("/");
+                fNum = fracPart.nextInt();
+                fDen = fracPart.nextInt();
 
             } else{
                 deliminate.useDelimiter("/");
@@ -58,12 +69,43 @@ public class FracCalc {
             }
 
         } else{
-            //fWhole = (int) fTerm;
+            fWhole = Integer.parseInt(fTerm);
             fNum = 0;
             fDen = 1;
         }
 
-        return fNum + " " + fDen;
+        //Denominator
+        Scanner deliminater = new Scanner(lTerm);
+        //If the term has a fractional part
+        if (fTerm.indexOf("/") >= 0){
+            //if the term has a whole number part
+            if (fTerm.indexOf("_") >= 0){
+
+                deliminater.useDelimiter("_");
+
+                lWhole = deliminater.nextInt();
+
+                String tempString = deliminater.next();
+                Scanner fracPart = new Scanner(tempString);
+
+                fracPart.useDelimiter("/");
+                lNum = fracPart.nextInt();
+                lDen = fracPart.nextInt();
+
+            } else{
+                deliminater.useDelimiter("/");
+                lWhole = 0;
+                lNum = deliminater.nextInt();
+                lDen = deliminater.nextInt();
+            }
+
+        } else{
+            lWhole = Integer.parseInt(lTerm);
+            lNum = 0;
+            lDen = 1;
+        }
+
+        return "whole:" + lWhole + " numerator:" + lNum + " denominator:" + lDen;
     }
 }
 // TODO: Fill in the space below with any helper methods that you think you will need
