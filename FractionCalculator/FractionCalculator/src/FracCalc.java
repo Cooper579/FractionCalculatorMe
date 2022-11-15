@@ -105,7 +105,71 @@ public class FracCalc {
             lDen = 1;
         }
 
-        return "whole:" + lWhole + " numerator:" + lNum + " denominator:" + lDen;
+        //Converting to mixed fractions
+        int fMixedNum;
+        int lMixedNum;
+
+        if (fWhole < 0){
+            fMixedNum = fDen * fWhole - fNum;
+        }
+        else{
+            fMixedNum = fDen * fWhole + fNum;
+        }
+
+        if (lWhole < 0){
+            lMixedNum = lDen * lWhole - lNum;
+        }
+        else{
+            lMixedNum = lDen * lWhole + lNum;
+        }
+
+        String finalAnswer;
+
+        if (operation.equals("+")){
+            finalAnswer = addition(fMixedNum, fDen, lMixedNum, lDen);
+        }
+        else if(operation.equals("-")){
+            finalAnswer = subtraction(fMixedNum, fDen, lMixedNum, lDen);
+        }
+        else if(operation.equals("/")){
+            finalAnswer = division(fMixedNum, fDen, lMixedNum, lDen);
+        }
+        else{
+            finalAnswer = multiplication(fMixedNum, fDen, lMixedNum, lDen);
+        }
+
+        return finalAnswer;
     }
+
+    public static String multiplication(int fNum, int fDen, int lNum, int lDen){
+
+        int finalNum = fNum * lNum;
+        int finalDen = lDen * fDen;
+
+        return finalNum + "/" + finalDen;
+    }
+
+    public static String division(int fNum, int fDen, int lNum, int lDen){
+        int finalNum = fNum * lDen;
+        int finalDen = fDen * lNum;
+
+        return finalNum + "/" + finalDen;
+    }
+
+    public static String addition(int fNum, int fDen, int lNum, int lDen){
+        int finalNum = (fNum * lDen) + (lNum * fDen);
+        int finalDen = fDen * lDen;
+
+        return finalNum + "/" + finalDen;
+    }
+
+    public static String subtraction(int fNum, int fDen, int lNum, int lDen){
+        int finalNum = (fNum * lDen) - (lNum * fDen);
+        int finalDen = fDen * lDen;
+
+        return finalNum + "/" + finalDen;
+    }
+
+
 }
 // TODO: Fill in the space below with any helper methods that you think you will need
