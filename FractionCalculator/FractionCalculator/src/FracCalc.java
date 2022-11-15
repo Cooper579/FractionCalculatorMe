@@ -146,30 +146,80 @@ public class FracCalc {
         int finalNum = fNum * lNum;
         int finalDen = lDen * fDen;
 
-        return finalNum + "/" + finalDen;
+        String finalNumber = simplify(finalNum, finalDen);
+
+        return finalNumber;
     }
 
     public static String division(int fNum, int fDen, int lNum, int lDen){
         int finalNum = fNum * lDen;
         int finalDen = fDen * lNum;
 
-        return finalNum + "/" + finalDen;
+        String finalNumber = simplify(finalNum, finalDen);
+
+        return finalNumber;
     }
 
     public static String addition(int fNum, int fDen, int lNum, int lDen){
         int finalNum = (fNum * lDen) + (lNum * fDen);
         int finalDen = fDen * lDen;
 
-        return finalNum + "/" + finalDen;
+        String finalNumber = simplify(finalNum, finalDen);
+
+        return finalNumber;
     }
 
     public static String subtraction(int fNum, int fDen, int lNum, int lDen){
         int finalNum = (fNum * lDen) - (lNum * fDen);
         int finalDen = fDen * lDen;
 
-        return finalNum + "/" + finalDen;
+        String finalNumber = simplify(finalNum, finalDen);
+
+        return finalNumber;
     }
 
+    public static String simplify(int num, int den){
+
+        int finalNum;
+        int finalDen;
+
+        if (num >=0) {
+            int counter = 2;
+
+            while (counter < num){
+                if (num % counter == 0){
+                    if ((den % counter) == 0){
+                        den = den / counter;
+                        num = num / counter;
+
+                        counter = 1;
+                    }
+                }
+                counter++;
+            }
+
+            finalNum = num;
+            finalDen = den;
+        } else{
+            int counter = -2;
+
+            while (counter > num){
+                if (num % (-1*counter) == 0){
+                    if ((den % (-1*counter)) == 0){
+                        den = den / -1*counter;
+                        num = num / -1*counter;
+
+                        counter = -1;
+                    }
+                }
+                counter--;
+            }
+            finalNum = num;
+            finalDen = den;
+        }
+
+        return finalNum + "/" + finalDen;
+    }
 
 }
 // TODO: Fill in the space below with any helper methods that you think you will need
