@@ -77,20 +77,20 @@ public class FracCalc {
         //Denominator
         Scanner deliminater = new Scanner(lTerm);
         //If the term has a fractional part
-        if (fTerm.indexOf("/") >= 0){
+        if (lTerm.indexOf("/") >= 0){
             //if the term has a whole number part
-            if (fTerm.indexOf("_") >= 0){
+            if (lTerm.indexOf("_") >= 0){
 
                 deliminater.useDelimiter("_");
 
                 lWhole = deliminater.nextInt();
 
                 String tempString = deliminater.next();
-                Scanner fracPart = new Scanner(tempString);
+                Scanner fractPart = new Scanner(tempString);
 
-                fracPart.useDelimiter("/");
-                lNum = fracPart.nextInt();
-                lDen = fracPart.nextInt();
+                fractPart.useDelimiter("/");
+                lNum = fractPart.nextInt();
+                lDen = fractPart.nextInt();
 
             } else{
                 deliminater.useDelimiter("/");
