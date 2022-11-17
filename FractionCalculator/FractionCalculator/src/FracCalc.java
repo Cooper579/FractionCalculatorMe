@@ -27,117 +27,138 @@ public class FracCalc {
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String texts) {
-        Scanner inputs = new Scanner(texts);
-        // TODO: Implement this function to produce the solution to the input
-        inputs.useDelimiter(" ");
-        String fTerm = inputs.next();
-        String operation = inputs.next();
-        String lTerm = inputs.next();
 
-        int fNum;
-        int fDen;
-        int fWhole;
+        String finalAnswer = "";
 
-        int lNum;
-        int lDen;
-        int lWhole;
+        int count = 0;
+        for(int i = 0; i < texts.length(); i++){
+            String letter = texts.substring(i, i+1);
+            if (letter.equals(" ")){
+                count = count + 1;
+            }
+        }
 
-        //Numerator
-        Scanner deliminate = new Scanner(fTerm);
-        //If the term has a fractional part
-        if (fTerm.indexOf("/") >= 0){
-            //if the term has a whole number part
-            if (fTerm.indexOf("_") >= 0){
+        String updateString = texts;
 
-                deliminate.useDelimiter("_");
+        //While loop here
+        int numTerms = count/2;
+        for(int i = 0; i < numTerms; i ++){
+            Scanner inputs = new Scanner(updateString);
+            // TODO: Implement this function to produce the solution to the input
+            inputs.useDelimiter(" ");
+            String fTerm = inputs.next();
+            String operation = inputs.next();
+            String lTerm = inputs.next();
 
-                fWhole = deliminate.nextInt();
+            int fNum;
+            int fDen;
+            int fWhole;
 
-                String tempString = deliminate.next();
+            int lNum;
+            int lDen;
+            int lWhole;
 
-                Scanner fracPart = new Scanner(tempString);
+            //Numerator
+            Scanner deliminate = new Scanner(fTerm);
+            //If the term has a fractional part
+            if (fTerm.indexOf("/") >= 0){
+                //if the term has a whole number part
+                if (fTerm.indexOf("_") >= 0){
 
-                fracPart.useDelimiter("/");
-                fNum = fracPart.nextInt();
-                fDen = fracPart.nextInt();
+                    deliminate.useDelimiter("_");
+
+                    fWhole = deliminate.nextInt();
+
+                    String tempString = deliminate.next();
+
+                    Scanner fracPart = new Scanner(tempString);
+
+                    fracPart.useDelimiter("/");
+                    fNum = fracPart.nextInt();
+                    fDen = fracPart.nextInt();
+
+                } else{
+                    deliminate.useDelimiter("/");
+                    fWhole = 0;
+                    fNum = deliminate.nextInt();
+                    fDen = deliminate.nextInt();
+                }
 
             } else{
-                deliminate.useDelimiter("/");
-                fWhole = 0;
-                fNum = deliminate.nextInt();
-                fDen = deliminate.nextInt();
+                fWhole = Integer.parseInt(fTerm);
+                fNum = 0;
+                fDen = 1;
             }
 
-        } else{
-            fWhole = Integer.parseInt(fTerm);
-            fNum = 0;
-            fDen = 1;
-        }
+            //Denominator
+            Scanner deliminater = new Scanner(lTerm);
+            //If the term has a fractional part
+            if (lTerm.indexOf("/") >= 0){
+                //if the term has a whole number part
+                if (lTerm.indexOf("_") >= 0){
 
-        //Denominator
-        Scanner deliminater = new Scanner(lTerm);
-        //If the term has a fractional part
-        if (lTerm.indexOf("/") >= 0){
-            //if the term has a whole number part
-            if (lTerm.indexOf("_") >= 0){
+                    deliminater.useDelimiter("_");
 
-                deliminater.useDelimiter("_");
+                    lWhole = deliminater.nextInt();
 
-                lWhole = deliminater.nextInt();
+                    String tempString = deliminater.next();
+                    Scanner fractPart = new Scanner(tempString);
 
-                String tempString = deliminater.next();
-                Scanner fractPart = new Scanner(tempString);
+                    fractPart.useDelimiter("/");
+                    lNum = fractPart.nextInt();
+                    lDen = fractPart.nextInt();
 
-                fractPart.useDelimiter("/");
-                lNum = fractPart.nextInt();
-                lDen = fractPart.nextInt();
+                } else{
+                    deliminater.useDelimiter("/");
+                    lWhole = 0;
+                    lNum = deliminater.nextInt();
+                    lDen = deliminater.nextInt();
+                }
 
             } else{
-                deliminater.useDelimiter("/");
-                lWhole = 0;
-                lNum = deliminater.nextInt();
-                lDen = deliminater.nextInt();
+                lWhole = Integer.parseInt(lTerm);
+                lNum = 0;
+                lDen = 1;
             }
 
-        } else{
-            lWhole = Integer.parseInt(lTerm);
-            lNum = 0;
-            lDen = 1;
-        }
+            //Converting to mixed fractions
+            int fMixedNum;
+            int lMixedNum;
 
-        //Converting to mixed fractions
-        int fMixedNum;
-        int lMixedNum;
+            if (fWhole < 0){
+                fMixedNum = fDen * fWhole - fNum;
+            }
+            else{
+                fMixedNum = fDen * fWhole + fNum;
+            }
 
-        if (fWhole < 0){
-            fMixedNum = fDen * fWhole - fNum;
-        }
-        else{
-            fMixedNum = fDen * fWhole + fNum;
-        }
+            if (lWhole < 0){
+                lMixedNum = lDen * lWhole - lNum;
+            }
+            else{
+                lMixedNum = lDen * lWhole + lNum;
+            }
 
-        if (lWhole < 0){
-            lMixedNum = lDen * lWhole - lNum;
-        }
-        else{
-            lMixedNum = lDen * lWhole + lNum;
-        }
+            if (operation.equals("+")){
+                finalAnswer = addition(fMixedNum, fDen, lMixedNum, lDen);
+            }
+            else if(operation.equals("-")){
+                finalAnswer = subtraction(fMixedNum, fDen, lMixedNum, lDen);
+            }
+            else if(operation.equals("/")){
+                finalAnswer = division(fMixedNum, fDen, lMixedNum, lDen);
+            }
+            else{
+                finalAnswer = multiplication(fMixedNum, fDen, lMixedNum, lDen);
+            }
 
-        String finalAnswer;
+            if (i < numTerms - 1) {
+                String tempStr = updateString.substring(updateString.indexOf(" ") + 1);
+                String dumbStr = tempStr.substring(tempStr.indexOf(" ") + 1);
 
-        if (operation.equals("+")){
-            finalAnswer = addition(fMixedNum, fDen, lMixedNum, lDen);
+                updateString = finalAnswer + dumbStr.substring(dumbStr.indexOf(" "));
+            }
         }
-        else if(operation.equals("-")){
-            finalAnswer = subtraction(fMixedNum, fDen, lMixedNum, lDen);
-        }
-        else if(operation.equals("/")){
-            finalAnswer = division(fMixedNum, fDen, lMixedNum, lDen);
-        }
-        else{
-            finalAnswer = multiplication(fMixedNum, fDen, lMixedNum, lDen);
-        }
-
         return finalAnswer;
     }
 
@@ -186,7 +207,7 @@ public class FracCalc {
         if (num >=0) {
             int counter = 2;
 
-            while (counter < num){
+            while (counter <= num){
                 if (num % counter == 0){
                     if ((den % counter) == 0){
                         den = den / counter;
@@ -203,12 +224,11 @@ public class FracCalc {
         } else{
             int counter = -2;
 
-            while (counter > num){
+            while (counter >= num){
                 if (num % (-1*counter) == 0){
                     if ((den % (-1*counter)) == 0){
-                        den = den / -1*counter;
-                        num = num / -1*counter;
-
+                        den = den / (-1*counter);
+                        num = num / (-1*counter);
                         counter = -1;
                     }
                 }
@@ -218,8 +238,40 @@ public class FracCalc {
             finalDen = den;
         }
 
-        return finalNum + "/" + finalDen;
+        int wholeNum = 0;
+        boolean negative = finalNum < 0;
+
+        System.out.println(num + " " + den);
+
+        if (finalNum >= 0) {
+            while (finalNum > finalDen - 1) {
+                wholeNum++;
+                finalNum = finalNum - finalDen;
+            }
+        }
+        else{
+            while(finalNum < finalDen - 1){
+                wholeNum++;
+                finalNum = finalNum + finalDen;
+            }
+        }
+
+
+        if(finalNum == 0){
+            if (negative){
+                return "-" + wholeNum;
+            }
+            return wholeNum + "";
+        }
+        if(wholeNum == 0){
+            return finalNum + "/" + finalDen;
+        }
+        if (negative){
+            return "-" + wholeNum + "_" + finalNum + "/" + finalDen;
+        }
+        return wholeNum + "_" + finalNum + "/" + finalDen;
     }
+
 
 }
 // TODO: Fill in the space below with any helper methods that you think you will need
