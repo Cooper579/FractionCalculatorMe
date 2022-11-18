@@ -222,26 +222,26 @@ public class FracCalc {
             finalNum = num;
             finalDen = den;
         } else{
-            int counter = -2;
+            int counter = 2;
+            num = num*-1;
+            while (counter <= num){
+                if (num % counter == 0){
+                    if ((den % counter) == 0){
+                        den = den / counter;
+                        num = num / counter;
 
-            while (counter >= num){
-                if (num % (-1*counter) == 0){
-                    if ((den % (-1*counter)) == 0){
-                        den = den / (-1*counter);
-                        num = num / (-1*counter);
-                        counter = -1;
+                        counter = 1;
                     }
                 }
-                counter--;
+                counter++;
             }
-            finalNum = num;
+            
+            finalNum = num*-1;
             finalDen = den;
         }
 
         int wholeNum = 0;
         boolean negative = finalNum < 0;
-
-        System.out.println(num + " " + den);
 
         if (finalNum >= 0) {
             while (finalNum > finalDen - 1) {
@@ -250,12 +250,15 @@ public class FracCalc {
             }
         }
         else{
-            while(finalNum < finalDen - 1){
-                wholeNum++;
-                finalNum = finalNum + finalDen;
+            if (finalNum < finalDen - 1){
+                wholeNum = finalNum/finalDen;
+                finalNum = finalNum - wholeNum*finalDen;
             }
+            //while(finalNum < finalDen - 1){
+            //    wholeNum++;
+            //    finalNum = finalNum + finalDen;
+            //}
         }
-
 
         if(finalNum == 0){
             if (negative){
@@ -267,11 +270,10 @@ public class FracCalc {
             return finalNum + "/" + finalDen;
         }
         if (negative){
-            return "-" + wholeNum + "_" + finalNum + "/" + finalDen;
+            return wholeNum + "_" + (-1*finalNum) + "/" + finalDen;
         }
         return wholeNum + "_" + finalNum + "/" + finalDen;
     }
 
 
 }
-// TODO: Fill in the space below with any helper methods that you think you will need
