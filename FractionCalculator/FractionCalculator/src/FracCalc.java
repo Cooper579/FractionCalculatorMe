@@ -262,7 +262,7 @@ public class FracCalc {
 
         if(finalNum == 0){
             if (negative){
-                return "-" + wholeNum;
+                return "" + wholeNum;
             }
             return wholeNum + "";
         }
